@@ -1,20 +1,27 @@
-# Dockerfile
-
+# Dockerfile (produção)
 FROM node:18-alpine AS builder
 
+# Ambiente de Produção
+
+ENV NODE_ENV=prod
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+
+# Instala Quasar CLI globalmente com permissões adequadas
+RUN npm install -g @quasar/cli --unsafe-perm=true
+
+# Copia todo o código-fonte para dentro do container
 COPY . .
-# Gera arquivos de produção em /app/dist/spa
-RUN npm run build     # ou quasar build
 
+# Instala dependências (incluindo scripts do Quasar Prepare)
+RUN npm install
 
+RUN quasar build
+
+# Fase final: container leve com Nginx
 FROM nginx:stable-alpine
-# Copia build SPA para a pasta servida pelo nginx
+
+# Copia os arquivos de produção para o Nginx
 COPY --from=builder /app/dist/spa /usr/share/nginx/html
-# Remover configuração default se quiser customizar
-# COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
