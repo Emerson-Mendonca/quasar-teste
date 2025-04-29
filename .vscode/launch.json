@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Quasar: Chrome",
+      "url": "http://localhost:9000",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Quasar Dev",
+      "sourceMaps": true,
+      "timeout": 30000,
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    }
+  ]
+}
