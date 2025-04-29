@@ -1,9 +1,7 @@
 version: "3.8"
 services:
   quasar-www:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/emerson-mendonca/quasar-teste:0.0.1
     ports:
       - "80:80"
     restart: unless-stopped

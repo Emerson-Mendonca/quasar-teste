@@ -1,27 +1,21 @@
-# Dockerfile.dev
+# docker/Dockerfile.dev
 FROM node:18-alpine
 
-# Variáveis de ambiente para não instalar pacotes opcionais
-ENV NODE_ENV=development \
-    QUASAR_CLI_VERSION=2
-
-# Cria o diretório do app e define como workdir
+# Ambiente de desenvolvimento
+ENV NODE_ENV=development
 WORKDIR /app
 
-# Instala Quasar CLI globalmente
-RUN npm install -g @quasar/cli@${QUASAR_CLI_VERSION}
+# Instala Quasar CLI globalmente com permissões adequadas
+RUN npm install -g @quasar/cli --unsafe-perm=true
 
-# Copia package.json e package-lock.json (cache de dependências)
-COPY package*.json ./
-
-# Instala dependências
-RUN npm install
-
-# Copia todo o código
+# Copia todo o código-fonte para dentro do container
 COPY . .
 
-# Expõe porta padrão Quasar dev server
+# Instala dependências (incluindo scripts do Quasar Prepare)
+RUN npm install
+
+# Exponha a porta padrão do Quasar dev server
 EXPOSE 8080
 
-# Comando padrão: inicia Quasar em modo dev, ouvindo em 0.0.0.0
+# Inicia o Quasar em modo de desenvolvimento, escutando em todas interfaces
 CMD ["quasar", "dev", "-p", "8080", "-H", "0.0.0.0"]
