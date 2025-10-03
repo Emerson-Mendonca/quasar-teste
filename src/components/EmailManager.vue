@@ -17,20 +17,8 @@
       </div>
 
       <!-- Q-Select após carregamento -->
-      <q-select 
-        v-else 
-        v-model="emails" 
-        use-input 
-        multiple 
-        hide-dropdown-icon 
-        input-debounce="0"
-        new-value-mode="add-unique" 
-        :label="inputLabel" 
-        filled 
-        dense 
-        :options="[]"
-        @new-value="validateAndAddEmail"
-      >
+      <q-select v-else v-model="emails" use-input multiple hide-dropdown-icon input-debounce="0"
+        new-value-mode="add-unique" :label="inputLabel" filled dense :options="[]" @new-value="validateAndAddEmail">
         <template v-slot:selected-item="scope">
           <q-chip removable dense color="primary" text-color="white" @remove="removeEmail(scope.opt)">
             {{ scope.opt }}
@@ -39,14 +27,8 @@
       </q-select>
     </q-card-section>
     <q-card-actions align="right">
-      <q-btn 
-        color="primary" 
-        label="Salvar" 
-        @click="saveEmails" 
-        :loading="isLoading"
-        :disable="isLoading || !hasEmailChanges" 
-        unelevated 
-      />
+      <q-btn color="primary" label="Salvar" @click="saveEmails" :loading="isLoading"
+        :disable="isLoading || !hasEmailChanges" unelevated />
     </q-card-actions>
   </q-card>
 </template>
